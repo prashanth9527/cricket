@@ -1,0 +1,186 @@
+var balls = 0;
+var gamestate = "serve";
+var runs = 0;
+var batsman = createSprite(200, 100);
+batsman.setAnimation("Screen Shot 2020-11-03 at 8.53.04 PM.png_1");
+batsman.scale = 0.2;
+// 
+var ball = createSprite(200, 350);
+ball.setAnimation("Screen Shot 2020-11-03 at 9.02.17 PM.png_1");
+ball.scale = 0.1;
+// 
+var wall = createSprite(100, 200, 5, 400);
+wall.shapeColor = "white";
+// 
+var greece = createSprite(170, 150, 150, 5);
+greece.shapeColor = "white";
+// 
+var wall2 = createSprite(250, 200, 5, 400);
+wall2.shapeColor = "white";
+// 
+var wikets = createSprite(200, 5);
+wikets.scale = 0.6;
+wikets.setAnimation("animation_1");
+// 
+var fiel2 = createSprite(300, 250);
+fiel2.setAnimation("fielder.png_2");
+fiel2.scale = 0.2;
+var fiel3 = createSprite(50, 300);
+fiel3.setAnimation("fielder.png_3");
+fiel3.scale = 0.2;
+var fiel4 = createSprite(50, 100);
+fiel4.setAnimation("fielder.png_4");
+fiel4.scale = 0.2;
+var fiel5 = createSprite(50, 25);
+fiel5.setAnimation("fielder.png_5");
+fiel5.scale = 0.2;
+var fiel6 = createSprite(330, 30);
+fiel6.setAnimation("fielder.png_6");
+fiel6.scale = 0.2;
+var fiel7 = createSprite(265, 350);
+fiel7.setAnimation("fielder.png_7");
+fiel7.scale = 0.2;
+// 
+var fiel1 = createSprite(350, 100);
+fiel1.setAnimation("fielder.png_1");
+fiel1.scale = 0.2;
+function draw() {
+  background("forestgreen");
+  drawSprites();
+  createEdgeSprites();
+  fill("yellow");
+  stroke("yellow");
+  textSize(20);
+  text("runs:" + runs, 310, 20);
+  text("Balls:" + balls, 330, 40);
+  if (gamestate === "serve") {
+    text("press enter to start", 135, 160);
+    if (keyWentDown("enter")) {
+      gamestate = "play";
+      ball.velocityY = -4;
+    }
+  }
+  if (ball.isTouching(bottomEdge)) {
+    balls = balls + 1;
+    runs = runs + 6;
+    ball.velocityX = 0;
+    ball.velocityY = 0;
+    ball.x = 200;
+    ball.y = 350;
+    gamestate = "serve";
+    if (ball.isTouching(bottomEdge)) {
+      balls = balls + 1;
+  runs = runs + 6;
+  ball.velocityX = 0;
+  ball.velocityY = 0;
+  ball.x = 200;
+  ball.y = 350;
+  gamestate = "serve";
+}
+  }
+  if (ball.isTouching(batsman)) {
+    ball.velocityY = 0;
+    ball.velocityX = random(-3, 4);
+    ball.velocityY = randomNumber(-1, 4);
+  }
+  if (keyWentDown("up")) {
+    batsman.y = batsman.y - 4;
+  }
+  if (keyWentDown("down")) {
+    batsman.y = batsman.y + 4;
+  }
+  if (keyWentDown("left")) {
+    batsman.x = batsman.x - 4;
+  }
+  if (keyWentDown("right")) {
+    batsman.x = batsman.x + 4;
+  }
+  if (ball.isTouching(wikets)) {
+    balls = 0;
+    runs = 0;
+    ball.velocityX = 0;
+    ball.velocityY = 0;
+    text("Out press r to restart", 135, 160);
+    if (keyWentDown("r")) {
+      gamestate = "serve";
+      ball.x = 200;
+      ball.y = 350;
+      batsman.x = 200;
+      batsman.y = 100;
+    }
+  }
+  ball.bounceOff(edges);
+  batsman.bounceOff(edges);
+  batsman.bounceOff(wall);
+  batsman.bounceOff(wall2);
+  batsman.bounceOff(greece);
+  batsman.bounceOff(edges);
+  if (ball.isTouching(fiel1)) {
+    balls = balls + 1;
+    runs = runs + 1;
+    gamestate = "serve";
+  }
+  if (ball.isTouching(fiel2)) {
+    balls = balls + 1;
+    runs = runs + 1;
+    gamestate = "serve";
+    serve();
+  }
+  if (ball.isTouching(fiel3)) {
+    balls = balls + 1;
+    runs = runs + 1;
+    gamestate = "serve";
+    serve();
+  }
+  if (ball.isTouching(fiel4)) {
+    balls = balls + 1;
+    runs = runs + 0;
+    gamestate = "serve";
+    serve();
+  }
+  if (ball.isTouching(fiel5)) {
+    balls = balls + 1;
+    runs = runs + 1;
+    gamestate = "serve";
+    serve();
+  }
+  if (ball.isTouching(fiel6)) {
+    balls = balls + 1;
+    runs = runs + 0;
+    gamestate = "serve";
+    serve();
+  }
+  if (ball.isTouching(fiel7)) {
+    balls = balls + 1;
+    runs = runs + 1;
+    gamestate = "serve";
+    serve();
+  }
+  if (ball.isTouching(rightEdge)) {
+    balls = balls + 1;
+    runs = runs + 4;
+     ball.velocityX=0;
+    ball.velocityY=0;
+    ball.x=200;
+    ball.y=320;
+    gamestate="serve";
+    balls = balls + 1;
+  }
+  if (ball.isTouching(leftEdge)) {
+    balls = balls + 1;
+    runs = runs + 4;
+     ball.velocityX=0;
+    ball.velocityY=0;
+    ball.x=200;
+    ball.y=320;
+    gamestate="serve";
+  }
+}
+function serve(){
+  ball.velocityX=0;
+  ball.velocityY=0;
+  ball.x=200;
+  ball.y=340;
+  batsman.x=200;
+  batsman.y=70;
+}
